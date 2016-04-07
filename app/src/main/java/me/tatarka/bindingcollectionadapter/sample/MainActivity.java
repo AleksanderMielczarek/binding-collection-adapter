@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_spinner:
                         fragment = new FragmentSpinnerView();
                         break;
+                    case R.id.action_autocompletetetextview:
+                        fragment = new FragmentAutoCompleteTextView();
+                        break;
                     default:
                         binding.drawerLayout.closeDrawers();
                         return false;

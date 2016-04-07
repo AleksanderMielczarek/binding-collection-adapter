@@ -4,10 +4,12 @@ import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.support.v4.view.ViewPager;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 
 import java.util.List;
 
 import me.tatarka.bindingcollectionadapter.factories.BindingAdapterViewFactory;
+import me.tatarka.bindingcollectionadapter.factories.BindingAutoCompleteTextViewAdapterFactory;
 import me.tatarka.bindingcollectionadapter.factories.BindingViewPagerAdapterFactory;
 
 /**
@@ -59,6 +61,32 @@ public class BindingCollectionAdapters {
         } else {
             adapter.setItems(items);
             adapter.setPageTitles(pageTitles);
+        }
+    }
+
+    // AutoCompleteTextView
+    @SuppressWarnings("unchecked")
+    @BindingAdapter(value = {"itemView", "items", "adapter", "dropDownItemView", "itemIds", "itemIsEnabled"}, requireAll = false)
+    public static <T> void setAdapter(AutoCompleteTextView autoCompleteTextView, ItemViewArg<T> arg, List<T> items, BindingAutoCompleteTextViewAdapterFactory factory, ItemView dropDownItemView, BindingListViewAdapter.ItemIds<T> itemIds, BindingListViewAdapter.ItemIsEnabled<T> itemIsEnabled) {
+        if (arg == null) {
+            throw new IllegalArgumentException("itemView must not be null");
+        }
+        if (factory == null) {
+            factory = BindingAutoCompleteTextViewAdapterFactory.DEFAULT;
+        }
+        BindingAutoCompleteTextViewAdapter<T> adapter = (BindingAutoCompleteTextViewAdapter<T>) autoCompleteTextView.getAdapter();
+        if (adapter == null) {
+            adapter = factory.create(autoCompleteTextView, arg);
+            adapter.setDropDownItemView(dropDownItemView);
+            adapter.setItems(items);
+            adapter.setItemIds(itemIds);
+            adapter.setItemIsEnabled(itemIsEnabled);
+            autoCompleteTextView.setAdapter(adapter);
+        } else {
+            adapter.setDropDownItemView(dropDownItemView);
+            adapter.setItems(items);
+            adapter.setItemIds(itemIds);
+            adapter.setItemIsEnabled(itemIsEnabled);
         }
     }
 
