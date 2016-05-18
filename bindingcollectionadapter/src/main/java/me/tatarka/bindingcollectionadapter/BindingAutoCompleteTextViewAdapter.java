@@ -27,7 +27,7 @@ public class BindingAutoCompleteTextViewAdapter<T> extends BindingListViewAdapte
         return filter;
     }
 
-    private static final class StubFilter extends Filter {
+    private final class StubFilter extends Filter {
 
         private final FilterResults filterResults;
 
@@ -43,7 +43,7 @@ public class BindingAutoCompleteTextViewAdapter<T> extends BindingListViewAdapte
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
+            notifyDataSetChanged();
         }
     }
 }
